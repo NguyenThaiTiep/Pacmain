@@ -357,10 +357,6 @@ class CornersProblem(search.SearchProblem):
         for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
             # Add a successor state to the successor list if the action is legal
             # Here's a code snippet for figuring out whether a new position hits a wall:
-            #   x,y = currentPosition
-            #   dx, dy = Actions.directionToVector(action)
-            #   nextx, nexty = int(x + dx), int(y + dy)
-            #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
             dx, dy = Actions.directionToVector(action)
@@ -422,14 +418,19 @@ def cornersHeuristic(state, problem):
             unvisitedCorners.append(corner)
 
     currentPoint = node
-    while len(unvisitedCorners) > 0:
-        distance, corner = min([(util.manhattanDistance(
-            currentPoint, corner), corner) for corner in unvisitedCorners])
-        sum += distance
-        currentPoint = corner
-        unvisitedCorners.remove(corner)
 
-    print "Heuristic: ", sum
+    while len(unvisitedCorners) > 0:
+        distance = 1000000
+        cornerS = unvisitedCorners[0]
+        for corner in unvisitedCorners:
+            d2 = util.manhattanDistance(currentPoint, corner)
+            distance, cornerS = (
+                distance, cornerS) if distance < d2 else (d2, corner)
+
+        sum += distance
+        currentPoint = cornerS
+        unvisitedCorners.remove(cornerS)
+
     return sum
     # return 0  # Default to trivial solution
 
@@ -535,6 +536,11 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
+
+    # return sum
+
+    position, foodGrid = state
+    "*** YOUR CODE HERE ***"
     if(problem.isGoalState(state)):
         return 0
     verticesINMST = set()
@@ -577,6 +583,25 @@ def foodHeuristic(state, problem):
     # print "pos:", position, " h:", spanCost
     return spanCost
     # return 0
+#      foodList = foodGrid.asList()
+#     if len(foodList) ==0:
+#         return 0
+
+#     nextFood= NextFood(position, foodList)
+
+#     return util.manhattanDistance(position, nextFood)
+
+
+# def NextFood(position, foodList):
+#     nextFood = foodList[0]
+#     maxCost = util.manhattanDistance(position, nextFood)
+#     for food in foodList[1:]:
+#         cost = util.manhattanDistance(position, food)
+#         if maxCost < cost:
+#             maxCost = cost
+#             nextFood = food
+
+#     return nextFood
 
 
 class ClosestDotSearchAgent(SearchAgent):
