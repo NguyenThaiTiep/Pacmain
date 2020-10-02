@@ -553,7 +553,8 @@ def foodHeuristic(state, problem):
     closest_dist = min([util.manhattanDistance(position, item)
                         for item in verticesNOTMST])
 
-    # verticesNOTMST.add(position)
+
+# verticesNOTMST.add(position)
     edges = util.PriorityQueue()
 
     cost = 0
@@ -582,26 +583,26 @@ def foodHeuristic(state, problem):
         currentVert = outV
     # print "pos:", position, " h:", spanCost
     return spanCost
-    # return 0
-#      foodList = foodGrid.asList()
-#     if len(foodList) ==0:
-#         return 0
 
-#     nextFood= NextFood(position, foodList)
+    # # sum = 0
+    # # foodList = foodGrid.asList()
+    # # if len(foodList) == 0:
+    # #     return 0
+    # currentPoint = position
+    # sum = 0
+    # while len(foodList) > 0:
+    #     distance = 100000000000
+    #     cornerS = foodList[0]
+    #     for corner in foodList:
+    #         d2 = util.manhattanDistance(currentPoint, corner)
+    #         distance, cornerS = (
+    #             distance, cornerS) if distance < d2 else (d2, corner)
 
-#     return util.manhattanDistance(position, nextFood)
+    #     sum += distance
+    #     currentPoint = cornerS
+    #     foodList.remove(cornerS)
 
-
-# def NextFood(position, foodList):
-#     nextFood = foodList[0]
-#     maxCost = util.manhattanDistance(position, nextFood)
-#     for food in foodList[1:]:
-#         cost = util.manhattanDistance(position, food)
-#         if maxCost < cost:
-#             maxCost = cost
-#             nextFood = food
-
-#     return nextFood
+    # return sum
 
 
 class ClosestDotSearchAgent(SearchAgent):
@@ -673,18 +674,22 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         The state is Pacman's position. Fill this in with a goal test that will
         complete the problem definition.
         """
-        x, y = state
+        # x, y = state
 
-        "*** YOUR CODE HERE ***"
-        node = state[0]
-        visitedCorners = state[1]
+        # "*** YOUR CODE HERE ***"
 
-        if node in self.corners:
-            if not node in visitedCorners:
-                visitedCorners.append(node)
-            return len(visitedCorners) == 4
-        return False
-        # util.raiseNotDefined()
+        foodList = self.food.asList()
+        distance = 100000000000
+        cornerS = foodList[0]
+        for corner in foodList:
+            d2 = util.manhattanDistance(state, corner)
+            distance, cornerS = (
+                distance, cornerS) if distance < d2 else (d2, corner)
+
+        isGoal = state == cornerS
+
+        # For display purposes only
+        return isGoal
 
 
 def mazeDistance(point1, point2, gameState):
