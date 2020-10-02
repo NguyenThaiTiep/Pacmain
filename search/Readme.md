@@ -138,9 +138,11 @@ Nguyễn Thái Tiệp - 18021277
     - Input = (position,foodGrid)
     - sum = 0
     - currentPoint = node
-    ```while VisitedConners is not Empty
+    ```
+    while VisitedConners is not Empty
         get MinConner, MinDistance from unvisitedCorners (consident : min(distance = Distance(currentPoint, corner)) )
         sum += MinDistance
         currentPoint = MinConner
         unvisitedCorners.remove(MinConner)
-    return sum```
+    return sum
+    ```
