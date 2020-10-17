@@ -349,7 +349,7 @@ def betterEvaluationFunction(currentGameState):
     for ghostPosition in ghostPositions:
         ghostDistance = util.manhattanDistance(pacmanPosition, ghostPosition)
         if ghostDistance < 2:
-            evalNum = float('inf')
+            return -float('inf')
     evalNum -= 10*currentGameState.getScore()
     # print("min distance: " + str(minDistance) + " num food: " + str(len(foodPositions)) + " eval num: " + str(evalNum*(-1)))
     return evalNum*(-1)
